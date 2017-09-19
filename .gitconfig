@@ -1,0 +1,8 @@
+[user]
+	name = Gilberto Graham	
+	email = betograhaam@gmail.com
+[color]
+	status = auto
+	branch = auto
+	diff = auto
+	interactive = auto
