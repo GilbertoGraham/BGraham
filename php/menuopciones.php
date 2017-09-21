@@ -7,6 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+		<title>Gilberto Graham Cortes</title>
+		<link rel="icon" type="image/png" href="/Web2/img/Aicon.png" />
 	<meta charset="utf-8"/>
 	<title></title>
 	<script type="text/javascript">

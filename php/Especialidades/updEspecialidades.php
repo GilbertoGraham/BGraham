@@ -8,7 +8,6 @@ if (mysqli_connect_errno()) {
     exit();
 }
 	//identificar la accion del usuario para conocer que tipo de query usar en la actializacion de la bd
-
 if(isset($_GET['id'])){
   $accion = $_GET['id'];
 }
@@ -20,6 +19,9 @@ if(isset($_GET['id'])){
 		echo "
 			<html>
 			<head>
+
+      	<title>Gilberto Graham Cortes</title>
+      	<link rel='icon' type='image/png' href='/Web2/img/Aicon.png' />
 			<title></title>
 				<script type='text/javascript'>
 					function enviar(opc)
@@ -62,10 +64,7 @@ if(isset($_GET['id'])){
 						<td colspan='2' align='center'>
 						<input type='button' id='btnGrabar' name='btnGrabar' value='Grabar' style='width:100px' onClick='enviar(\"agregar\")'></td>
 					</tr>
-					<tr>
-						<td colspan='2' align='center'>
-						<input type='button' id='btnEliminar' name='btnEliminar' value='Eliminar' style='width:100px' onClick='enviar(\"eliminar\")'></td>
-					</tr>
+
 					<tr>
 						<td colspan='2' align='center'>
 						<input type='button' id='btnRegresar' name='btnRegresar' value='Regresar' style='width:100px' onClick='enviar(\"regresar\")'></td>
@@ -80,7 +79,7 @@ if(isset($_GET['id'])){
 		$id = $_GET['id'];
 
 		//obtener la recoleccion de registros que corresponde al id enviado
-		$query = "SELECT * FROM especialidades WHERE id='$id'";
+		$query = "SELECT * FROM Especialidad WHERE id='$id'";
 
 		//ejecutar a consulta
 		$tablaBD = mysqli_query($connect, $query);
@@ -108,7 +107,7 @@ if(isset($_GET['id'])){
 							case 'eliminar':
 								document.getElementById('hdnOpc').value = 'eliminar';
 								document.getElementById('hdnId').value = '$id';
-								document.getElementById(frmUpdEspecialidades).submit();
+								document.getElementById('frmUpdEspecialidades').submit();
 								break;
 
 							case 'regresar':

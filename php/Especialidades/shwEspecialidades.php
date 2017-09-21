@@ -9,10 +9,10 @@ if (empty($_SESSION['user']))
 //paso 2
 //conexion al servidor web y bd
 $conexionBD = mysqli_connect('localhost', 'root', 'root', 'ITS') or die
-('No pudo conectarse al Servidor de Base de Datos MySql:' .mysql_error());
+('No pudo conectarse al Servidor de Base de Datos MySql:' .mysqli_error());
 
 //seleccion al servidor web y db
-//mysqli_select_db($conexionBD, 'kardex') or die ('No se puede abrir la estructura de BD' .mysql_error());
+mysqli_select_db($conexionBD, "ITS") or die ("No se puede abrir la estructura de BD" . mysqli_connect_errno($conexionBD));
 
 //query para obtener conjunto de registro de la tabla de especialidades
 $qry = "SELECT * FROM Especialidad ORDER BY id";
@@ -28,8 +28,9 @@ if (mysqli_num_rows($tablaBD)>0){
 	<html>
 	<title></title>
 	<head>
-		<script type = 'text/javascript'>
-		funcion enviar(){
+		<script type='text/javascript'>
+		function enviar(){
+
 			window.location = 'updEspecialidades.php?id=noId';
 		}
 		</script>
@@ -38,7 +39,7 @@ if (mysqli_num_rows($tablaBD)>0){
 	<table align='center' width='430' border='1'>
 		<tr>
 			<td colspan='2' align='center'>
-				<input type='button' id='btnAgregar' name='btnAgregar' value='Agregar' onclick='enviar()'>
+				<input type='button' id='btnAgregar' name='btnAgregar' value='Agregar' onClick='enviar()'>
 			</td>
 		</tr>
 	</table>
@@ -50,8 +51,7 @@ if (mysqli_num_rows($tablaBD)>0){
 			<th width = '50' height = '20'> Clave </th>
 			<th width = '400' height = '20'> Nombre </th>
 		</thead>
-		<!- ciclo para recorrer la tabla de registros intermedios que forma ->
-		<!- la tabla html ->
+
 		</td></tr>
 		";
 		//desplegar los registros de la tabla especialidades de la bd
