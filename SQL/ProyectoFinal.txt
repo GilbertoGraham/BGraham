@@ -1,0 +1,63 @@
+proyecto bergas de adb
+Consultorio médico
+-hacerlo con htmlphp y demás
+expediente clínico
+
+
+Médico llamado Happy Donkey
+-Agendar citas
+-Llevar expediente
+-Saber si el paciente fue atendido
+select from citas 
+
+-Listado general de los pacientes atendidos
+	-Nombre completo
+	-Fecha de consulta
+	-Nombre del doctor que hizo la consulta
+	-Teléfono del paciente
+	-Ordenado por el paterno del paciente
+	--creando la vista
+	create or replace view listageneral as
+	select p.nombre as nombre_pac, p.paterno as paterno_pac, p.materno as materno_pac, p.telefono, fechayhora as fecha_de_la_cita, m.nombre as nombre_doc, m.paterno as paterno_doc, m.materno as materno_doc
+	from pacientes p, medicos m, citas c 
+	where m.id_medico = p.id_medico and c.id_medico = m.id_medico and c.id_paciente = p.id_paciente
+	order by p.paterno; 
+	
+-Listado general de los pacientes que son atendidos por un doctor en particular
+	-Nombre completo
+	-Fecha de cita
+	-Diagnóstico
+	-Qué le recetó
+	create or replace view atendidosporundoctorenparticular as
+	SELECT p.nombre, p.paterno, p.materno, fechayhora, diagnostico, receta
+	FROM pacientes p, citas c, diagnostico d
+	WHERE c.id_paciente = p.id_paciente and c.id_diagnostico = d.id_diagnostico and c.id_cita = d.id_cita and citas.id_medico = (select id_medico from medicos where nombre = $nombre and paterno = $paterno and materno = $materno);
+	
+
+-Listado general de los pacientes por género o sexo.
+	-Nombre completo
+	-Nombre del doctor 
+	-Fecha de las citas
+	CREATE OR REPLACE VIEW porgenero  as
+	SELECT p.id_paciente, p.nombre as nombre_pac, p.paterno as paterno_pac, p.materno as materno_pac, p.sexo sexo_pac, m.nombre as nombre_doc, m.paterno as paterno_doc, m.materno as materno_doc, fechayhora as fecha_consulta
+	FROM pacientes p, medicos m, citas c
+	WHERE m.id_medico = p.id_medico and c.id_medico = m.id_medico and c.id_paciente = p.id_paciente
+	ORDER BY sexo;
+	
+	
+-Listado de los pacientes que se han atendido en un periodo de fechas
+	-Nombre completo
+	-Nombre del doctor 
+	-Fecha de la cita o consulta
+	
+	update pacientes set sexo = 'masculino' where id_paciente = 2;
+	
+--botón para citas
+id_cita, fechayhora, médico asignado, paciente
+CREATE OR REPLACE VIEW vista_citas as
+SELECT c.id_cita, concat(m.nombre, " ", m.paterno, " ", m.materno) as nombre_doc, concat(p.nombre, " ", p.paterno, " ", p.materno) as nombre_pac, c.fechayhora as fecha_cita, d.id_diagnostico as id_diag
+from citas c, medicos m, pacientes p, diagnostico d
+where  c.id_medico = m.id_medico and c.id_paciente = p.id_paciente and d.id_cita = c.id_cita;
+
+--vista para diagnosti
+SELECT c.id_cita, c.fechayhora, c.concretada, oncat(m.nombre, m.paterno, m.materno) as nombre_doc, concat(p.nombre, p.paterno, p.materno) as nombre_pac, d.diagnostico, 
